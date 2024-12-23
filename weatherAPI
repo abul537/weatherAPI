@@ -1,0 +1,35 @@
+const apiKey = "b18b5a75e6f517987f5c97ddadc54160"; 
+
+function getWeather() {
+    const city = document.getElementById('city').value;
+    if (!city) {
+        alert("Please enter a city name!");
+        return; // no further execution b zaroori tha ...
+    }
+
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`) // yahan masla tha q k mai nay `` ki bajai '' use ki thin jis ki waja say mai variables ko acces nahe kar pa raha tha
+        .then(response => response.json()
+        
+    
+    )
+        
+        
+        .then(data => {
+            
+            
+            if (data.cod === 200) { // yahan masla tha q k mai nay code likha tha code ki jagga 
+                document.getElementById('city-name').textContent = `Weather in ${data.name}`;
+                document.getElementById('temperature').textContent = `Temperature: ${data.main.temp}°C`;
+                document.getElementById('description').textContent = `Condition: ${data.weather[0].description}`;
+                document.getElementById('humidity').textContent = `Humidity: ${data.main.humidity}%`;
+                document.getElementById('wind-speed').textContent = `Wind Speed: ${data.wind.speed} m/s`;
+            } else {
+                alert("City not found!");
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching weather data:", error);
+            alert("Unable to retrieve weather data. Please try again.");
+        });
+       
+}
